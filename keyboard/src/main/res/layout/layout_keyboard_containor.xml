@@ -51,7 +51,6 @@
             android:focusableInTouchMode="true"
             android:keyBackground="@drawable/keyboard_press_bg"
             android:keyPreviewHeight="60dp"
-            android:keyPreviewLayout="@layout/keyboard_preview_layout"
             android:keyPreviewOffset="0dp"
             android:keyTextColor="@color/black"
             android:labelTextSize="18sp" />

@@ -2,7 +2,6 @@ package me.coffee.widget.keyboard;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Service;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
@@ -11,7 +10,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
-import android.os.Vibrator;
 import android.text.Editable;
 import android.util.Log;
 import android.view.Gravity;
@@ -41,7 +39,6 @@ import java.util.Random;
 
 public class SafeKeyboard {
     private static final String TAG = "SafeKeyboard";
-    private final Vibrator vibrator;
 
     private final Activity mContext;               //上下文
 
@@ -77,15 +74,19 @@ public class SafeKeyboard {
     private final boolean isLetterRandom;
     private final boolean isSymbolRandom;
 
+
+    public SafeKeyboard(Activity mContext, List<EditText> editTextList) {
+        this(mContext, editTextList, false, false, false);
+    }
+
     public SafeKeyboard(Activity mContext, List<EditText> editTextList, boolean isNumberRandom, boolean isLetterRandom, boolean isSymbolRandom) {
         this.mContext = mContext;
         this.editTextList = editTextList;
         this.keyboardContainerResId = R.layout.layout_keyboard_containor;
-        this.keyboardResId = LayoutInflater.from(mContext).inflate(R.layout.layout_keyboard_containor, null).findViewById(R.id.safeKeyboardLetter).getId();
+        this.keyboardResId = R.id.safeKeyboardLetter;
         this.isNumberRandom = isNumberRandom;
         this.isLetterRandom = isLetterRandom;
         this.isSymbolRandom = isSymbolRandom;
-        vibrator = (Vibrator) mContext.getSystemService(Service.VIBRATOR_SERVICE);
         delDrawable = mContext.getResources().getDrawable(R.drawable.icon_del);
         lowDrawable = mContext.getResources().getDrawable(R.drawable.icon_capital_default);
         upDrawable = mContext.getResources().getDrawable(R.drawable.icon_capital_selected);
@@ -93,7 +94,6 @@ public class SafeKeyboard {
         initKeyboard();
         initAnimation();
         addListeners();
-
     }
 
     public SafeKeyboard(Activity mContext, LinearLayout layout, List<EditText> editTextList, int id, int keyId,
@@ -110,7 +110,6 @@ public class SafeKeyboard {
         this.isNumberRandom = isNumberRandom;
         this.isLetterRandom = isLetterRandom;
         this.isSymbolRandom = isSymbolRandom;
-        vibrator = (Vibrator) mContext.getSystemService(Service.VIBRATOR_SERVICE);
 
         initKeyboard();
         initAnimation();
@@ -265,14 +264,13 @@ public class SafeKeyboard {
 
         @Override
         public void onPress(int primaryCode) {
-            vibrator.vibrate(new long[]{0, 50}, -1);
-            if (keyboardType == 3) {
-                keyboardView.setPreviewEnabled(false);
-            } else {
-                keyboardView.setPreviewEnabled(true);
-                keyboardView.setPreviewEnabled(primaryCode != -1 && primaryCode != -5 && primaryCode != 32 && primaryCode != -2
-                        && primaryCode != 100860 && primaryCode != -35 && primaryCode != -7 && primaryCode != -8);
-            }
+//            if (keyboardType == 3) {
+//                keyboardView.setPreviewEnabled(false);
+//            } else {
+//                keyboardView.setPreviewEnabled(true);
+//                keyboardView.setPreviewEnabled(primaryCode != -1 && primaryCode != -5 && primaryCode != 32 && primaryCode != -2
+//                        && primaryCode != 100860 && primaryCode != -35 && primaryCode != -7 && primaryCode != -8);
+//            }
         }
 
         @Override
