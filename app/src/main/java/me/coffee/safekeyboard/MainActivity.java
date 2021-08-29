@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         editList.add(safeEdit);
         editList.add(safeEdit2);
         editList.add(safeEdit3);
+        safeKeyboard = new SafeKeyboard(MainActivity.this, editList);
+
 
         final Button clck = findViewById(R.id.feed_back);
         clck.setOnClickListener(new View.OnClickListener() {
@@ -49,26 +51,23 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, safeEdit3.getText(), Toast.LENGTH_SHORT).show();
             }
         });
-        safeKeyboard = new SafeKeyboard(MainActivity.this, editList, false, false, false);
+
     }
 
 
-    // 当点击返回键时, 如果软键盘正在显示, 则隐藏软键盘并是此次返回无效
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            if (safeKeyboard.isShow()) {
-                safeKeyboard.hideKeyboard();
-                StringBuilder builder = new StringBuilder();
-                builder.append(safeEdit2.getText());
-                ((TextView) findViewById(R.id.tv)).setText(builder.toString());
-                return false;
-            }
-
-            return super.onKeyDown(keyCode, event);
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    // 当点击返回键时, 如果软键盘正在显示, 则隐藏软键盘并是此次返回无效
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+//            if (safeKeyboard.isShow()) {
+//                safeKeyboard.hideKeyboard();
+//                return false;
+//            }
+//
+//            return super.onKeyDown(keyCode, event);
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
 
 }

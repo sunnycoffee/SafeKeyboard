@@ -437,7 +437,7 @@ public class SafeKeyboard {
         public void run() {
             // 在迅速点击不同输入框时, 造成自定义软键盘和系统软件盘不停的切换, 偶尔会出现停在使用系统键盘的输入框时, 没有隐藏
             // 自定义软键盘的情况, 为了杜绝这个现象, 加上下面这段代码
-            if (!mEditText.isFocused()) {
+            if (mEditText != null && !mEditText.isFocused()) {
                 hideKeyboard();
             }
         }
@@ -532,7 +532,6 @@ public class SafeKeyboard {
 
                             }
                         } else {
-                            ((EditText) v).setText("");
                             if (!isKeyboardShown()) {
                                 showHandler.removeCallbacks(showRun);
                                 showHandler.postDelayed(showRun, SHOW_DELAY);
