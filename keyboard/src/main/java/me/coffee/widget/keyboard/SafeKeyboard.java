@@ -57,6 +57,7 @@ public class SafeKeyboard {
     private final Handler showHandler = new Handler(Looper.getMainLooper());
     private final Handler hEndHandler = new Handler(Looper.getMainLooper());
     private final Handler sEndHandler = new Handler(Looper.getMainLooper());
+    private final Handler checkHandler = new Handler(Looper.getMainLooper());
     private Drawable delDrawable;
     private Drawable lowDrawable;
     private Drawable upDrawable;
@@ -414,6 +415,25 @@ public class SafeKeyboard {
     }
 
     /**
+     * 延迟状态判定
+     */
+    private final Runnable checkFocus = new Runnable() {
+        @Override
+        public void run() {
+            boolean isFocus = true;
+            for (int j = 0; j < editTextList.size(); j++) {
+                boolean flag = !editTextList.get(j).isFocused();
+                isFocus = isFocus && flag;
+            }
+            if (isFocus) {
+                if (isKeyboardShown()) {
+                    hideKeyboard();
+                }
+            }
+        }
+    };
+
+    /**
      * 只起到延时开始显示的作用
      */
     private final Runnable showRun = new Runnable() {
@@ -469,36 +489,6 @@ public class SafeKeyboard {
             editTextList.get(i).setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    if (v.getTag() == null) {
-                        for (int j = 0; j < keyboardNumber.getKeys().size(); j++) {
-                            if (" ".equals(keyboardNumber.getKeys().get(j).label)) {
-                                keyboardNumber.getKeys().get(j).label = "ABC";
-                            }
-
-                        }
-                        if (isLetterRandom) {
-                            randomLetter();
-                            keyboardView.setKeyboard(keyboardLetter);
-                        } else {
-                            keyboardView.setKeyboard(keyboardLetter);
-                        }
-
-                    } else {
-                        for (int j = 0; j < keyboardNumber.getKeys().size(); j++) {
-                            if ("ABC".equals(keyboardNumber.getKeys().get(j).label)) {
-                                keyboardNumber.getKeys().get(j).label = " ";
-                            }
-
-                        }
-                        if (isNumberRandom) {
-                            randomNumbers();
-                            keyboardView.setKeyboard(keyboardNumber);
-                        } else {
-                            keyboardView.setKeyboard(keyboardNumber);
-                        }
-
-
-                    }
                     if (event.getAction() == MotionEvent.ACTION_UP) {
                         hideSystemKeyBoard((EditText) v);
                         if (isKeyboardShown()) {
@@ -519,29 +509,48 @@ public class SafeKeyboard {
                 public void onFocusChange(View v, boolean hasFocus) {
                     // boolean result = isValidTouch();
                     if (v instanceof EditText) {
-                        if (!hasFocus) {
-                            boolean isFocus = true;
-                            for (int j = 0; j < editTextList.size(); j++) {
-                                boolean flag = !editTextList.get(j).isFocused();
-                                isFocus = isFocus && flag;
-                            }
-                            if (isFocus) {
-                                if (isKeyboardShown()) {
-                                    hideKeyboard();
-                                }
-
-                            }
-                        } else {
+                        if (hasFocus) {
+                            updateKeyBoard(v);
                             if (!isKeyboardShown()) {
                                 showHandler.removeCallbacks(showRun);
                                 showHandler.postDelayed(showRun, SHOW_DELAY);
                             }
+                        } else {
+                            checkHandler.removeCallbacks(checkFocus);
+                            checkHandler.postDelayed(checkFocus, 20);
                         }
                     }
                 }
             });
         }
 
+    }
+
+    private void updateKeyBoard(View v) {
+        if (v.getTag() == null) {
+            for (int j = 0; j < keyboardNumber.getKeys().size(); j++) {
+                if (" ".equals(keyboardNumber.getKeys().get(j).label)) {
+                    keyboardNumber.getKeys().get(j).label = "ABC";
+                }
+
+            }
+            if (isLetterRandom) {
+                randomLetter();
+            }
+            keyboardView.setKeyboard(keyboardLetter);
+
+        } else {
+            for (int j = 0; j < keyboardNumber.getKeys().size(); j++) {
+                if ("ABC".equals(keyboardNumber.getKeys().get(j).label)) {
+                    keyboardNumber.getKeys().get(j).label = " ";
+                }
+
+            }
+            if (isNumberRandom) {
+                randomNumbers();
+            }
+            keyboardView.setKeyboard(keyboardNumber);
+        }
     }
 
     public boolean isShow() {
