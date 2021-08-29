@@ -1,4 +1,4 @@
-package me.coffee.safekeyboard.safekeyboard;
+package me.coffee.safekeyboard;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +14,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.coffee.safekeyboard.R;
 import me.coffee.widget.keyboard.SafeKeyboard;
 
 public class MainActivity extends AppCompatActivity {

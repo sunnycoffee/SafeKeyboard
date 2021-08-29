@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -46,6 +47,7 @@ public class SafeKeyboard {
 
     private View keyContainer;              //自定义键盘的容器View
     private SafeKeyboardView keyboardView;  //键盘的View
+    private TextView titleView;             //标题
     private Keyboard keyboardNumber;        //数字键盘
     private Keyboard keyboardLetter;        //字母键盘
     private Keyboard keyboardSymbol;        //符号键盘
@@ -87,7 +89,6 @@ public class SafeKeyboard {
         delDrawable = mContext.getResources().getDrawable(R.drawable.icon_del);
         lowDrawable = mContext.getResources().getDrawable(R.drawable.icon_capital_default);
         upDrawable = mContext.getResources().getDrawable(R.drawable.icon_capital_selected);
-        logoDrawable = mContext.getResources().getDrawable(R.drawable.google_logo);
         downDrawable = mContext.getResources().getDrawable(R.drawable.keyboard_done);
         initKeyboard();
         initAnimation();
@@ -194,6 +195,7 @@ public class SafeKeyboard {
         keyboardView.setPreviewEnabled(false);
         keyboardView.setOnKeyboardActionListener(listener);
 
+        titleView = keyContainer.findViewById(R.id.title);
         ImageView done = keyContainer.findViewById(R.id.keyboardDone);
         done.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -311,7 +313,7 @@ public class SafeKeyboard {
                     }
                     switchKeyboard();
                 } else if (primaryCode == -7) {
-
+                    editable.insert(length, " ");
                 } else if (primaryCode == -8) {
                     hideKeyboard();
                 } else if (primaryCode == 100860) {
@@ -739,6 +741,10 @@ public class SafeKeyboard {
     public void setHideDrawable(Drawable downDrawable) {
         this.downDrawable = downDrawable;
         keyboardView.setHideDrawable(downDrawable);
+    }
+
+    public void setTitle(String title) {
+        titleView.setText(title);
     }
 
 }

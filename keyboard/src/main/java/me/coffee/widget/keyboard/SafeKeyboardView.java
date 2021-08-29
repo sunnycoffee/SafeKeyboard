@@ -82,7 +82,7 @@ public class SafeKeyboardView extends KeyboardView {
             drawKeyBackground(R.drawable.keyboard_change, canvas, key);
             drawTextAndIcon(canvas, key, null, Color.WHITE);
         } else if (key.codes[0] == -7) {
-            drawKeyBackground2(logoDrawable, canvas, key);
+            if (logoDrawable != null) drawKeyBackground2(logoDrawable, canvas, key);
             // drawTextAndIcon(canvas, key, null, Color.WHITE);
         } else if (key.codes[0] == -8) {
             drawKeyBackground(R.drawable.keyboard_change, canvas, key);
