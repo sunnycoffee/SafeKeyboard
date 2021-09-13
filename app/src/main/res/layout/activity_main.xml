@@ -24,13 +24,15 @@
             android:hint="系统键盘"
             android:inputType="text" />
 
-        <EditText
+        <me.coffee.safekeyboard.SafeEditText
             android:id="@+id/safeEditText"
             android:layout_width="match_parent"
             android:layout_height="50sp"
             android:layout_marginStart="10sp"
             android:layout_marginEnd="10sp"
-            android:hint="安全输入-数字" />
+            android:hint="安全输入-数字"
+            android:inputType="number"
+            android:tag="safeNumber" />
 
         <EditText
             android:id="@+id/safeEditText2"

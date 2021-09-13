@@ -3,12 +3,10 @@ package me.coffee.safekeyboard;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.HapticFeedbackConstants;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -36,11 +34,10 @@ public class MainActivity extends AppCompatActivity {
         safeEdit2 = findViewById(R.id.safeEditText2);
         safeEdit3 = findViewById(R.id.safeEditText3);
 
-        safeEdit.setTag("number");
         editList.add(safeEdit);
         editList.add(safeEdit2);
         editList.add(safeEdit3);
-        safeKeyboard = new SafeKeyboard(MainActivity.this, editList);
+        safeKeyboard = new SafeKeyboard(editList);
 
 
         final Button clck = findViewById(R.id.feed_back);
