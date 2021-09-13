@@ -16,6 +16,7 @@ import android.os.SystemClock;
 import android.text.Editable;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -464,24 +465,16 @@ public class SafeKeyboard {
 
     @SuppressLint("ClickableViewAccessibility")
     private void addListeners() {
-
         for (int i = 0; i < editTextList.size(); i++) {
-            editTextList.get(i).setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        hideSystemKeyBoard((EditText) v);
-                        if (isKeyboardShown()) {
-                            return false;
-                        }
-                        if (!isKeyboardShown()) {
-                            showHandler.removeCallbacks(showRun);
-                            showHandler.postDelayed(showRun, SHOW_DELAY);
-                        }
+            editTextList.get(i).setOnTouchListener((v, event) -> {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    hideSystemKeyBoard((EditText) v);
+                    if (!isKeyboardShown()) {
+                        showHandler.removeCallbacks(showRun);
+                        showHandler.postDelayed(showRun, SHOW_DELAY);
                     }
-                    return false;
                 }
-
+                return false;
             });
 
             editTextList.get(i).setOnFocusChangeListener((v, hasFocus) -> {
@@ -489,6 +482,7 @@ public class SafeKeyboard {
                 if (v instanceof EditText) {
                     if (hasFocus) {
                         updateKeyBoard(v);
+                        hideSystemKeyBoard((EditText) v);
                         if (!isKeyboardShown()) {
                             showHandler.removeCallbacks(showRun);
                             showHandler.postDelayed(showRun, SHOW_DELAY);
@@ -723,6 +717,16 @@ public class SafeKeyboard {
 
     public void setTitle(String title) {
         if (title != null) titleView.setText(title);
+    }
+
+    public boolean doBackKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            if (isShow()) {
+                hideKeyboard();
+                return true;
+            }
+        }
+        return false;
     }
 
 }

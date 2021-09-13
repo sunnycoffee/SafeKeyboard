@@ -24,7 +24,7 @@
             android:hint="系统键盘"
             android:inputType="text" />
 
-        <me.coffee.safekeyboard.SafeEditText
+        <EditText
             android:id="@+id/safeEditText"
             android:layout_width="match_parent"
             android:layout_height="50sp"
