@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.text.Editable;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -285,6 +286,7 @@ public class SafeKeyboard {
                     // 回退键,删除字符
                     if (editable != null && editable.length() > 0) {
                         if (start > 0) {
+                            secEditDel(mEditText, start);
                             editable.delete(start - 1, start);
                         }
                     }
@@ -306,7 +308,10 @@ public class SafeKeyboard {
                     }
                     switchKeyboard();
                 } else if (primaryCode == -7) {
-                    editable.insert(start, " ");
+                    if (secEditAdd(mEditText, " ", start)) {
+                        // 输入键盘值
+                        editable.insert(start, " ");
+                    }
                 } else if (primaryCode == -8) {
                     hideKeyboard();
                 } else if (primaryCode == 100860) {
@@ -318,8 +323,10 @@ public class SafeKeyboard {
                     }
                     switchKeyboard();
                 } else {
-                    // 输入键盘值
-                    editable.insert(start, Character.toString((char) primaryCode));
+                    if (secEditAdd(mEditText, Character.toString((char) primaryCode), start)) {
+                        // 输入键盘值
+                        editable.insert(start, Character.toString((char) primaryCode));
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -727,6 +734,30 @@ public class SafeKeyboard {
             }
         }
         return false;
+    }
+
+    private boolean secEditAdd(EditText editText, String value, int position) {
+        try {
+            if (!checkIsSec(editText)) return true;
+            //避免设置inputType之后影响输入内容
+            editText.setInputType(InputType.TYPE_CLASS_TEXT);
+            ((EditChangeListener) mEditText).addText(value, position);
+            editText.getText().insert(position, "•");
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
+
+    private void secEditDel(EditText editText, int position) {
+        if (checkIsSec(editText)) {
+            ((EditChangeListener) mEditText).delText(position);
+        }
+    }
+
+    private boolean checkIsSec(EditText editText) {
+        return editText instanceof EditChangeListener;
     }
 
 }

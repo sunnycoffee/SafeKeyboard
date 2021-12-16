@@ -52,10 +52,42 @@
             android:layout_marginEnd="10sp"
             android:hint="安全输入-任意字符" />
 
+        <me.coffee.widget.keyboard.SecEditText
+            android:id="@+id/safeEditText4"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_marginStart="10sp"
+            android:layout_marginEnd="10sp"
+            android:hint="安全输入-加密-数字"
+            android:inputType="number"
+            android:tag="safeNumber" />
+
+        <me.coffee.widget.keyboard.SecEditText
+            android:id="@+id/safeEditText5"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_marginStart="10sp"
+            android:layout_marginEnd="10sp"
+            android:hint="安全输入-加密-任意字符"
+            android:inputType="textPassword"
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_4"
+            android:layout_width="match_parent"
+            android:text="加密数字"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_5"
+            android:layout_width="match_parent"
+            android:text="加密任意字符"
+            android:layout_height="wrap_content" />
+        
 
     </LinearLayout>
 
