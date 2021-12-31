@@ -276,7 +276,7 @@ public class SafeKeyboard {
         @Override
         public void onKey(int primaryCode, int[] keyCodes) {
             try {
-                Editable editable = mEditText.getText();
+                final Editable editable = mEditText.getText();
                 final int start = mEditText.getSelectionStart();
 
                 if (primaryCode == Keyboard.KEYCODE_CANCEL) {
@@ -335,8 +335,14 @@ public class SafeKeyboard {
 
         @Override
         public void onText(CharSequence text) {
-
-
+            final Editable editable = mEditText.getText();
+            final boolean isCap = keyboardView.isCap();
+            final int start = mEditText.getSelectionStart();
+            final String value = isCap ? text.toString().toUpperCase() : text.toString().toLowerCase();
+            if (secEditAdd(mEditText, value, start)) {
+                // 输入键盘值
+                editable.insert(start, value);
+            }
         }
 
         @Override

@@ -3,7 +3,6 @@ package me.coffee.safekeyboard;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         btn4 = findViewById(R.id.btn_4);
         btn5 = findViewById(R.id.btn_5);
         tv = findViewById(R.id.tv);
-        
+
         btn4.setOnClickListener(v -> {
             tv.setText(safeEdit4.getText().toString());
             showToast(safeEdit4.getTextString());
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         if (safeKeyboard.doBackKeyDown(keyCode, event)) return true;
         else return super.onKeyDown(keyCode, event);
     }
-    
+
     private void showToast(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_LONG).show();
     }

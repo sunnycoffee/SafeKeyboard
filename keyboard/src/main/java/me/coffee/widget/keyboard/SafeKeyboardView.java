@@ -221,6 +221,10 @@ public class SafeKeyboardView extends KeyboardView {
         isCap = cap;
     }
 
+    public boolean isCap() {
+        return isCap;
+    }
+
     public void setDelDrawable(Drawable delDrawable) {
         this.delDrawable = delDrawable;
     }
