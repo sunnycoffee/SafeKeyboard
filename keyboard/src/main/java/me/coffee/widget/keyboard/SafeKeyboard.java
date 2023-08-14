@@ -571,7 +571,8 @@ public class SafeKeyboard {
             } catch (NoSuchMethodException e) {
                 edit.setInputType(0);
                 e.printStackTrace();
-            } catch (IllegalAccessException | InvocationTargetException | IllegalArgumentException e) {
+            } catch (IllegalAccessException | InvocationTargetException |
+                     IllegalArgumentException e) {
                 e.printStackTrace();
             }
         }
@@ -746,7 +747,9 @@ public class SafeKeyboard {
         try {
             if (!checkIsSec(editText)) return true;
             //避免设置inputType之后影响输入内容
-            editText.setInputType(InputType.TYPE_CLASS_TEXT);
+            if (editText.getInputType() == InputType.TYPE_CLASS_NUMBER) {
+                editText.setInputType(InputType.TYPE_CLASS_TEXT);
+            }
             ((EditChangeListener) mEditText).addText(value, position);
             editText.getText().insert(position, "•");
             return false;

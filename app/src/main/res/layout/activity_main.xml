@@ -50,7 +50,8 @@
             android:layout_height="50sp"
             android:layout_marginStart="10sp"
             android:layout_marginEnd="10sp"
-            android:hint="安全输入-任意字符" />
+            android:hint="安全输入-任意字符"
+            android:textStyle="bold" />
 
         <me.coffee.widget.keyboard.SecEditText
             android:id="@+id/safeEditText4"
@@ -60,7 +61,10 @@
             android:layout_marginEnd="10sp"
             android:hint="安全输入-加密-数字"
             android:inputType="number"
-            android:tag="safeNumber" />
+            android:tag="safeNumber"
+            android:textColor="#ff00ff"
+            android:textColorHint="#ff00ff"
+            android:textStyle="bold" />
 
         <me.coffee.widget.keyboard.SecEditText
             android:id="@+id/safeEditText5"
@@ -70,7 +74,9 @@
             android:layout_marginEnd="10sp"
             android:hint="安全输入-加密-任意字符"
             android:inputType="textPassword"
-            android:textSize="16sp" />
+            android:textColor="#ff00ff"
+            android:textColorHint="#ff00ff"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv"
@@ -80,14 +86,15 @@
         <Button
             android:id="@+id/btn_4"
             android:layout_width="match_parent"
-            android:text="加密数字"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="加密数字" />
+
         <Button
             android:id="@+id/btn_5"
             android:layout_width="match_parent"
-            android:text="加密任意字符"
-            android:layout_height="wrap_content" />
-        
+            android:layout_height="wrap_content"
+            android:text="加密任意字符" />
+
 
     </LinearLayout>
 
