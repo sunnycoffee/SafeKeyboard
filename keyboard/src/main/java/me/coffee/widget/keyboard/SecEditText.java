@@ -2,6 +2,7 @@ package me.coffee.widget.keyboard;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -10,7 +11,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
+
+import me.coffee.widget.CleanableEditText;
 
 /**
  * Author: xuan
@@ -18,7 +20,7 @@ import android.widget.EditText;
  * <p>
  * Describe:
  */
-public class SecEditText extends EditText implements EditChangeListener {
+public class SecEditText extends CleanableEditText implements EditChangeListener {
 
     // 存储点击的内容
     private byte[] contentValue;
@@ -75,6 +77,12 @@ public class SecEditText extends EditText implements EditChangeListener {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Nullable
+    @Override
+    public Editable getText() {
+        return super.getText();
     }
 
     @Override
