@@ -87,7 +87,8 @@ public class SecEditText extends CleanableEditText implements EditChangeListener
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (event.getKeyCode() == KeyEvent.KEYCODE_DEL) {
+        final int keyCode = event.getKeyCode();
+        if (keyCode == KeyEvent.KEYCODE_DEL || keyCode == KeyEvent.KEYCODE_BACK) {
             return super.dispatchKeyEvent(event);
         } else {
             return true;
